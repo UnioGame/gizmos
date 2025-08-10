@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace Popcron
 {
+    using System.Buffers;
+
     public class Gizmos
     {
         private static string _prefsKey = null;
