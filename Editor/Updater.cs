@@ -84,6 +84,11 @@ public class Updater : Editor
             await Task.Delay(1);
         }
 
+        if (listRequest.Status != StatusCode.Success || listRequest.Result == null)
+        {
+            return null;
+        }
+
         foreach (PackageInfo pack in listRequest.Result)
         {
             if (pack.name == PackageName)
@@ -102,6 +107,11 @@ public class Updater : Editor
     [DidReloadScripts]
     private static async void CheckForUpdates()
     {
+        if (Array.IndexOf(Environment.GetCommandLineArgs(), "-noUpm") >= 0)
+        {
+            return;
+        }
+
         //check for updates
         bool canUpdate = await IsUpdateAvailable();
         EditorPrefs.SetBool(CanUpdateKey, canUpdate);
