@@ -95,8 +95,13 @@ namespace Popcron
             if (hotReloaded || !instance)
             {
                 bool markDirty = false;
-                GizmosInstance[] gizmosInstances = FindObjectsByType<GizmosInstance>();
-                for (int i = 0; i < gizmosInstances.Length; i++)
+#if UNITY_6000_6_OR_NEWER
+                var gizmosInstances = FindObjectsByType<GizmosInstance>();
+#else
+                var gizmosInstances = FindObjectsByType<GizmosInstance>(FindObjectsInactive.Exclude, FindObjectsSortMode.None); 
+#endif
+                
+                for (var i = 0; i < gizmosInstances.Length; i++)
                 {
                     instance = gizmosInstances[i];
 
